@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/****************************************************************************
+**
+** This file is part of the Blackfriars Trading Terminal
+**
+** Copyright (C) 2021 Alexander Mishurov
+**
+** GNU General Public License Usage
+** This file may be used under the terms of the GNU
+** General Public License version 3. The licenses are as published by
+** the Free Software Foundation and appearing in the file LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-3.0.html.
+**
+****************************************************************************/
+-->
+<ui version="4.0">
+<class>RightPane</class>
+<widget class="QWidget" name="RightPane">
+    <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+            <horstretch>1</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <layout class="QVBoxLayout" name="mainVLayout">
+        <property name="alignment">
+            <set>Qt::AlignTop</set>
+        </property>
+        <property name="margin">
+            <number>0</number>
+        </property>
+        <item>
+            <layout class="QHBoxLayout" name="buttonsLayout">
+                <property name="spacing">
+                    <number>0</number>
+                </property>
+                <item>
+                    <widget class="QPushButton" name="buttonLong">
+                        <property name="checkable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="text">
+                            <string>Long</string>
+                        </property>
+                        <attribute name="buttonGroup">
+                            <string notr="true">groupLongShort</string>
+                        </attribute>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QPushButton" name="buttonShort">
+                        <property name="checkable">
+                            <bool>true</bool>
+                        </property>
+                        <property name="text">
+                            <string>Short</string>
+                        </property>
+                        <attribute name="buttonGroup">
+                            <string notr="true">groupLongShort</string>
+                        </attribute>
+                    </widget>
+                </item>
+            </layout>
+        </item>
+        <item>
+            <widget class="QLabel" name="labelMarketPrice">
+                <property name="text">
+                    <string>Market Price ($)</string>
+                </property>
+            </widget>
+        </item>
+        <item>
+            <layout class="QHBoxLayout" name="priceLayout" stretch="1,2">
+                <item alignment="Qt::AlignLeft|Qt::AlignBottom">
+                    <widget class="QLabel" name="labelMarketPriceValue">
+                        <property name="text">
+                            <string>0.00</string>
+                        </property>
+                    </widget>
+                </item>
+                <item alignment="Qt::AlignLeft|Qt::AlignBottom">
+                    <widget class="QLabel" name="labelMarketPriceChange"/>
+                </item>
+            </layout>
+        </item>
+        <item>
+            <widget class="QLabel" name="labelStop">
+                <property name="text">
+                    <string>Stop</string>
+                </property>
+            </widget>
+        </item>
+
+        <!-- Stop -->
+        <item>
+            <layout class="QHBoxLayout" name="stopLayout" stretch="0,2,1,0">
+                <item>
+                    <widget class="QLabel" name="labelStopDollars">
+                        <property name="text">
+                            <string>$</string>
+                        </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QDoubleSpinBox" name="inputStopDollars">
+                        <property name="minimum">
+                            <number>0</number>
+                        </property>
+                        <property name="maximum">
+                            <number>999999</number>
+                        </property>
+                        <property name="singleStep">
+                            <double>0.5</double>
+                        </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QDoubleSpinBox" name="inputStopPercents">
+                        <property name="alignment">
+                            <set>Qt::AlignRight</set>
+                        </property>
+                        <property name="minimum">
+                            <number>0</number>
+                        </property>
+                        <property name="maximum">
+                            <number>999999</number>
+                        </property>
+                        <property name="singleStep">
+                            <double>0.25</double>
+                        </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QLabel" name="labelStopPercents">
+                        <property name="text">
+                            <string>%</string>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
+        </item>
+
+        <!-- Target -->
+        <item>
+            <widget class="QLabel" name="labelTarget">
+                <property name="text">
+                    <string>Target</string>
+                </property>
+            </widget>
+        </item>
+        <item>
+            <layout class="QHBoxLayout" name="targetLayout" stretch="0,2,1,0">
+                <item>
+                    <widget class="QLabel" name="labelTargetDollars">
+                        <property name="text">
+                            <string>$</string>
+                        </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QDoubleSpinBox" name="inputTargetDollars">
+                        <property name="minimum">
+                            <number>0</number>
+                        </property>
+                        <property name="maximum">
+                            <number>999999</number>
+                        </property>
+                        <property name="singleStep">
+                            <double>0.5</double>
+                        </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QDoubleSpinBox" name="inputTargetPercents">
+                        <property name="alignment">
+                            <set>Qt::AlignRight</set>
+                        </property>
+                        <property name="minimum">
+                            <number>0</number>
+                        </property>
+                        <property name="maximum">
+                            <number>999999</number>
+                        </property>
+                        <property name="singleStep">
+                            <double>0.25</double>
+                        </property>
+                    </widget>
+                </item>
+                <item>
+                    <widget class="QLabel" name="labelTargetPercents">
+                        <property name="text">
+                            <string>%</string>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
+        </item>
+
+        <!-- Ratio -->
+        <item>
+            <widget class="QLabel" name="labelRiskReturn">
+                <property name="text">
+                    <string>Return / Risk Ratio</string>
+                </property>
+            </widget>
+        </item>
+        <item>
+            <widget class="QLabel" name="labelRiskReturnValue">
+                <property name="text">
+                    <string>0 / 0</string>
+                </property>
+            </widget>
+        </item>
+
+        <!-- Stops -->
+        <item>
+            <widget class="QPushButton" name="buttonStops">
+                <property name="text">
+                    <string>Adjust Stops</string>
+                </property>
+            </widget>
+        </item>
+
+        <!-- Position -->
+        <item>
+            <widget class="QLabel" name="labelPosition">
+                <property name="text">
+                    <string>Position Size</string>
+                </property>
+            </widget>
+        </item>
+
+        <item>
+            <layout class="QHBoxLayout" name="positionLayout" stretch="1,0,1">
+                <item>
+                    <widget class="QSpinBox" name="inputPosition">
+                        <property name="alignment">
+                            <set>Qt::AlignRight</set>
+                        </property>
+                        <property name="maximum">
+                            <number>999999</number>
+                        </property>
+                    </widget>
+                </item>
+                <item alignment="Qt::AlignRight|Qt::AlignCenter">
+                    <widget class="QLabel" name="labelPositionDollar">
+                        <property name="text">
+                            <string>$</string>
+                        </property>
+                    </widget>
+                </item>
+                <item alignment="Qt::AlignLeft|Qt::AlignCenter">
+                    <widget class="QLabel" name="labelPositionValue">
+                        <property name="text">
+                            <string>0.00</string>
+                        </property>
+                    </widget>
+                </item>
+            </layout>
+        </item>
+
+        <!-- Order -->
+        <item>
+            <widget class="QPushButton" name="buttonOrder">
+                <property name="text">
+                    <string>Place Order</string>
+                </property>
+            </widget>
+        </item>
+
+    </layout>
+</widget>
+<resources/>
+<connections/>
+<buttongroups>
+    <buttongroup name="groupLongShort"/>
+</buttongroups>
+</ui>
