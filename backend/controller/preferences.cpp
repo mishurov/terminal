@@ -68,11 +68,11 @@ void Preferences::save(const PrefData *data)
 	
 	auto broker = s.value("Preferences/broker", defaults.broker).toInt();
 
-	if (broker != data->broker)
-		emit brokerChanged(data->broker);
-
 	s.setValue("Preferences/broker", data->broker);
 	s.setValue("Preferences/credentials", data->credentials);
 	s.setValue("Preferences/risk", data->risk);
 	s.setValue("Preferences/target", data->target);
+
+	if (broker != data->broker)
+		emit brokerChanged(data->broker);
 }
