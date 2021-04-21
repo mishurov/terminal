@@ -12,7 +12,7 @@
    viewBox="0 0 502.70833 224.89584"
    version="1.1"
    id="svg8"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="arch.svg">
   <defs
      id="defs2" />
@@ -23,9 +23,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5298976"
-     inkscape:cx="931.46064"
-     inkscape:cy="317.77715"
+     inkscape:zoom="0.50746534"
+     inkscape:cx="551.04505"
+     inkscape:cy="422.39414"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -52,6 +52,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ffffff;stroke-width:0.356027"
+       id="rect902"
+       width="502.70834"
+       height="224.89584"
+       x="0"
+       y="0" />
     <rect
        style="opacity:0.981896;fill:#f6d6d6;fill-opacity:1;stroke-width:0.715806;stroke-linecap:round;stroke-linejoin:round"
        id="rect851"
