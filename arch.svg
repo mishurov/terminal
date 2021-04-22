@@ -15,7 +15,13 @@
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="arch.svg">
   <defs
-     id="defs2" />
+     id="defs2">
+    <style
+       type="text/css"
+       id="style2">
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700');
+    </style>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
