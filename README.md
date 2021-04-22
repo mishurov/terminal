@@ -18,7 +18,9 @@ The initial idea of the terminal is to do trades in Linux without using browsers
 
 ### Current architecture
 
-![arch](./arch.svg "arch")
+<object data="./arch.svg" type="image/svg+xml">
+  <img src="./arch.svg" />
+</object>
 
 ### At the moment
 
