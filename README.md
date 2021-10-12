@@ -1,6 +1,6 @@
 # Terminal (work in progress)
 
-![screenshot](https://mishurov.co.uk/images/github/terminal/screenshot.png "screenshot")
+![screenshot](./screenshot.png "screenshot")
 
 ### An intraday trading terminal
 
