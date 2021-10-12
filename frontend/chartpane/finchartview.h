@@ -24,18 +24,15 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
 class QCandlestickSeries;
 class QStackedBarSeries;
 class QCandlestickSet;
 class QValueAxis;
-QT_CHARTS_END_NAMESPACE
 
 class CrossHair;
 class Shade;
 class FinTimeAxis;
 
-QT_CHARTS_USE_NAMESPACE
 
 inline qint64 timeToQint(QDateTime time) {
 	return time.toMSecsSinceEpoch();
@@ -90,8 +87,11 @@ private:
 
 	void updateShades();
 
+	using QChart::wheelEvent;
 	void wheelEvent(QWheelEvent *event);
+	using QChart::mousePressEvent;
 	void mousePressEvent(QMouseEvent *event);
+	using QChart::mouseMoveEvent;
 	void mouseMoveEvent(QMouseEvent *event);
 
 	QPointF m_lastMousePos;

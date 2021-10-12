@@ -87,7 +87,7 @@ public:
 	}
 };
 
-class Stock;
+struct Stock;
 
 class TickerInput : public QWidget
 {

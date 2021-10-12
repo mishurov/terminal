@@ -23,6 +23,7 @@
 #include "backend/controller/preferences.h"
 
 #include <QtWidgets/QStyle>
+#include <QtCore/QFile>
 
 
 RightPane::RightPane(QWidget *parent)

@@ -30,10 +30,6 @@ CentralWidget::CentralWidget(QWidget *parent)
 			margin: 7;
 		}
 	)");
-
-#if defined(Q_OS_MACOS)
-	layout()->setContentsMargins(10, 30, 10, 10);
-#endif
 }
 
 CentralWidget::~CentralWidget()

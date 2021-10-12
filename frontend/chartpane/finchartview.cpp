@@ -52,6 +52,8 @@ FinChart::FinChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 {
 	connect(this, &QChart::plotAreaChanged, this, &FinChart::plotAreaChanged);
 
+	setAcceptTouchEvents(false);
+
 	m_priceSeries = new QCandlestickSeries;
 	m_volumeSeries = new QStackedBarSeries;
 

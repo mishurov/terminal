@@ -20,10 +20,8 @@
 
 #include <QtWidgets/QWidget>
 
-QT_BEGIN_NAMESPACE
 namespace Ui { class ChartPane; }
 class QAbstractButton;
-QT_END_NAMESPACE
 
 
 class ChartPane : public QWidget

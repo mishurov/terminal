@@ -50,7 +50,7 @@ void MonteCarloBroker::requestStocks()
 	auto json = QJsonDocument::fromJson(file.readAll());
 	const auto instruments = json["payload"]["instruments"].toArray();
 
-	for (auto i : instruments) {
+	for (const QJsonValue i : instruments) {
 		if (i["currency"] != "USD")
 			continue;
 		auto *s = new Stock;

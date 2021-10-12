@@ -26,9 +26,7 @@
 
 int main(int argc, char *argv[])
 {
-	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, true);
 	QApplication a(argc, argv);
-	a.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 	a.setStyle("Fusion");
 	a.setPalette(AppPalette());

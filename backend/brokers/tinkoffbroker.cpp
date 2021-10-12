@@ -140,6 +140,7 @@ QNetworkRequest TinkoffBroker::authRequest(QUrl url)
 	if (m_token.isEmpty())
 		Alert().up("Sandbox token is empty. Preferences: Credentials");
 	auto request = QNetworkRequest(url);
+	request.setAttribute(QNetworkRequest::Http2AllowedAttribute, false);
 	request.setHeader(QNetworkRequest::ContentTypeHeader, QVariant("application/json"));
 	auto bearer = QString("Bearer %1").arg(m_token);
 	request.setRawHeader("Authorization", bearer.toLatin1());
@@ -152,8 +153,12 @@ void TinkoffBroker::responseReceived(QNetworkReply *reply)
 	auto data = reply->readAll();
 
 	auto networkError = reply->error();
-	if (networkError != QNetworkReply::NoError)
-		Alert().up("Network Error", data);
+	if (networkError != QNetworkReply::NoError) {
+		if (networkError == QNetworkReply::AuthenticationRequiredError)
+			Alert().up("Authentication Error", data);
+		else
+			Alert().up("Network Error", data);
+	}
 
 	QJsonParseError parseError;
     auto json = QJsonDocument::fromJson(data, &parseError);
@@ -215,7 +220,7 @@ void TinkoffBroker::parseCandles(QJsonDocument json)
 
 	QString intervalString;
 	QString figi;
-	for (auto jc : jsonCandles) {
+	for (const QJsonValue jc : jsonCandles) {
 		auto *c = new Candle;
 
 		c->open = jc["o"].toDouble();
@@ -259,7 +264,7 @@ void TinkoffBroker::parseStocks(QJsonDocument json)
 
 	const auto instruments = json["payload"]["instruments"].toArray();
 
-	for (auto i : instruments) {
+	for (const QJsonValue i : instruments) {
 		if (i["currency"] != "USD")
 			continue;
 		auto *s = new Stock;

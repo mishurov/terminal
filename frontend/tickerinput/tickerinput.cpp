@@ -19,12 +19,13 @@
 #include "backend/brokers/abstractbroker.h"
 
 #include <QtCore/QTextStream>
-#include <QtWidgets/QAction>
+#include <QtCore/QFile>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QCompleter>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtGui/QAction>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QStandardItemModel>
 
@@ -128,7 +129,6 @@ TickerInput::TickerInput(QWidget *parent)
 {
 	layout = new QHBoxLayout(this);
 	layout->setSizeConstraint(QLayout::SetFixedSize);
-	layout->setMargin(0);
 	setLayout(layout);
 
 	setupTickerLabel();

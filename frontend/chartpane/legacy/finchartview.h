@@ -22,17 +22,13 @@
 #include <QDateTime>
 #include <QDebug>
 
-QT_CHARTS_BEGIN_NAMESPACE
 class QCandlestickSeries;
 class QCandlestickSet;
 class QDateTimeAxis;
 class QValueAxis;
-QT_CHARTS_END_NAMESPACE
 
 class CrossHair;
 class Candle;
-
-QT_CHARTS_USE_NAMESPACE
 
 inline qint64 timeToQint(QDateTime time) {
 	return time.toMSecsSinceEpoch();

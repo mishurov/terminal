@@ -15,24 +15,18 @@
 ****************************************************************************/
 
 
-#include <QtWidgets/QWidget>
 #import <AppKit/AppKit.h>
 
-extern "C" void configureTitleBar(WId winId)
+extern "C" void configureTitleBar(unsigned long winId)
 {
 	if (winId == 0) return;
 
 	NSView* view = (NSView*)winId;
 	NSWindow* window = [view window];
-
-	window.appearance = [NSAppearance appearanceNamed: NSAppearanceNameVibrantDark];
-	window.titlebarAppearsTransparent = YES;
-
-	NSWindowStyleMask windowMask =
-		NSWindowStyleMaskTitled
-		| NSWindowStyleMaskClosable
-		| NSWindowStyleMaskMiniaturizable
-		| NSWindowStyleMaskFullSizeContentView
-		| NSWindowStyleMaskResizable;
-	[window setStyleMask: windowMask];
+	window.titlebarAppearsTransparent = true;
+	window.backgroundColor = [NSColor
+		colorWithRed: (53 / 255.0f)
+		green: (53 / 255.0f)
+		blue: (53 / 255.0f)
+		alpha: 1.0];
 }

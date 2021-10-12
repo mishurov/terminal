@@ -21,9 +21,6 @@
 #include <private/qbarcategoryaxis_p.h>
 #include <private/horizontalaxis_p.h>
 
-
-QT_CHARTS_USE_NAMESPACE
-
 class FinChart;
 class FinTimeAxis;
 

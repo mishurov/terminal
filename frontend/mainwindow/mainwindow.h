@@ -26,7 +26,7 @@ QT_END_NAMESPACE
 
 
 #if defined(Q_OS_MACOS)
-	extern "C" void configureTitleBar(WId winId);
+	extern "C" void configureTitleBar(unsigned long winId);
 #endif
 
 

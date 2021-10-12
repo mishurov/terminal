@@ -22,7 +22,6 @@
 #include <QtWidgets/QGraphicsItem>
 #include <QtCore/QDateTime>
 
-QT_CHARTS_USE_NAMESPACE
 
 class FinChart;
 

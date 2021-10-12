@@ -14,9 +14,11 @@
 #
 # **************************************************************************/
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
 project(Terminal LANGUAGES CXX)
+
+set(QT_VERSION_STR 6.2.0)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -29,7 +31,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # https://packages.debian.org/bullseye/amd64/libxcb-util1/download
 # sudo apt install -t buster-backports libvulkan-dev
-set(OpenGL_GL_PREFERENCE GLVND)
 
 # Windows Git Bash
 # export PATH=$PATH:/c/Qt/Tools/mingw810_64/bin/:/c/Qt/Tools/CMake_64/bin/
@@ -38,27 +39,20 @@ set(OpenGL_GL_PREFERENCE GLVND)
 # cmake -G "MinGW Makefiles" ..
 # mingw32-make.exe
 if (APPLE)
-    set(COMPILER clang)
+    set(QT_COMPILER_DIRNAME macos)
 elseif (UNIX)
-    set(COMPILER gcc)
+    set(QT_COMPILER_DIRNAME gcc_64)
 elseif (WIN32)
-    set(COMPILER mingw81)
+    set(QT_COMPILER_DIRNAME mingw81_64)
 endif()
 
-if (WIN32)
-    set(QT_LOC "C:")
-else()
-    set(QT_LOC $ENV{HOME})
-endif()
+set(QT_PARENT_DIR $ENV{HOME})
+set(CMAKE_PREFIX_PATH ${QT_PARENT_DIR}/Qt/${QT_VERSION_STR}/${QT_COMPILER_DIRNAME})
 
-set(QT_VERSION_STR 5.15.2)
-
-set(CMAKE_PREFIX_PATH ${QT_LOC}/Qt/${QT_VERSION_STR}/${COMPILER}_64)
-
-find_package(QT NAMES Qt5 COMPONENTS Widgets Charts Network WebSockets REQUIRED)
+find_package(QT NAMES Qt6 COMPONENTS Widgets Charts Network WebSockets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Charts Network WebSockets REQUIRED)
 
-include_directories( ${Qt5Charts_PRIVATE_INCLUDE_DIRS} )
+include_directories( ${Qt6Charts_PRIVATE_INCLUDE_DIRS} )
 
 set(PROJECT_SOURCES
     main.cpp
@@ -89,20 +83,16 @@ set(PROJECT_SOURCES
 )
 
 if (APPLE)
-    find_library(AppKit AppKit)
-    find_library(Foundation Foundation)
-    set(APPLE_LIBS ${AppKit} ${Foundation})
     set(PROJECT_SOURCES ${PROJECT_SOURCES} frontend/mainwindow/titlebar.mm)
 endif()
 
-add_executable(Terminal
-    ${PROJECT_SOURCES}
-)
+qt_add_executable(Terminal MANUAL_FINALIZATION ${PROJECT_SOURCES})
 
 target_link_libraries(Terminal PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Charts
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::WebSockets
-    ${APPLE_LIBS}
 )
+
+qt_finalize_executable(Terminal)
