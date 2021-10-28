@@ -14,29 +14,32 @@
 **
 ****************************************************************************/
 
-
-#include "frontend/mainwindow/mainwindow.h"
-#include "frontend/palette/palette.h"
-
-#include "frontend/facade/market.h"
-#include "backend/controller/market.h"
+#include "frontend/QFCharts/QFCharts.h"
+#include "frontend/Blackfriars/Blackfriars.h"
 
 #include <QtWidgets/QApplication>
-#include <QtCore/QTimer>
+#include <QtQml/QQmlApplicationEngine>
+#include <QtQuick/QQuickWindow>
+
 
 int main(int argc, char *argv[])
 {
-	QApplication a(argc, argv);
+	registerQFChartsTypes();
+	initBlackfriars();
 
-	a.setStyle("Fusion");
-	a.setPalette(AppPalette());
+	QApplication app(argc, argv);
+	QQmlApplicationEngine engine;
 
-	MainWindow w;
-	w.readSettings();
-	w.show();
-	// create controllers before exec to access widgets in facade constructors
-	auto mc = MarketController(&a);
-	QTimer::singleShot(0, mc.facade(), &MarketFacade::onEventLoopStarted);
+	//const QUrl url(QStringLiteral("qrc:/main.qml"));
+	const QUrl url = QUrl::fromLocalFile("../frontend/main.qml");
 
-	return a.exec();
+	engine.load(url);
+	if (engine.rootObjects().isEmpty())
+		return -1;
+	// antialiasing
+	QQuickWindow* window = (QQuickWindow*) engine.rootObjects().first();
+	QSurfaceFormat format = window->format();
+	format.setSamples(4);
+	window->setFormat(format); 
+	return app.exec();
 }

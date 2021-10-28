@@ -14,11 +14,37 @@
 #
 # **************************************************************************/
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.19)
 
-project(Terminal LANGUAGES CXX)
+set(QT_VERSION_STR 6.2.1)
 
-set(QT_VERSION_STR 6.2.0)
+if (APPLE)
+    set(QT_COMPILER_DIRNAME macos)
+elseif (UNIX)
+    # sudo apt install -t bullseye-backports libvulkan-dev
+    set(QT_COMPILER_DIRNAME gcc_64)
+elseif (WIN32)
+    # Windows (Git BASH / MinGW)
+    # add to PATH (Search env: Edit the system environment variables)
+    # C:\Qt\6.2.1\mingw81_64\bin
+    # C:\Qt\Tools\mingw810_64\bin
+    # C:\Qt\Tools\CMake_64\bin
+    # mkdir build
+    # cd build
+    # cmake -G "MinGW Makefiles" ..
+    # mingw32-make.exe
+    set(QT_COMPILER_DIRNAME mingw81_64)
+endif()
+
+if (WIN32)
+    set(QT_PARENT_DIR "C:")
+else()
+    set(QT_PARENT_DIR $ENV{HOME})
+endif()
+
+set(CMAKE_PREFIX_PATH ${QT_PARENT_DIR}/Qt/${QT_VERSION_STR}/${QT_COMPILER_DIRNAME})
+
+project(Blackfriars VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -29,70 +55,66 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# https://packages.debian.org/bullseye/amd64/libxcb-util1/download
-# sudo apt install -t buster-backports libvulkan-dev
-
-# Windows Git Bash
-# export PATH=$PATH:/c/Qt/Tools/mingw810_64/bin/:/c/Qt/Tools/CMake_64/bin/
-# mkdir build
-# cd build
-# cmake -G "MinGW Makefiles" ..
-# mingw32-make.exe
-if (APPLE)
-    set(QT_COMPILER_DIRNAME macos)
-elseif (UNIX)
-    set(QT_COMPILER_DIRNAME gcc_64)
-elseif (WIN32)
-    set(QT_COMPILER_DIRNAME mingw81_64)
-endif()
-
-set(QT_PARENT_DIR $ENV{HOME})
-set(CMAKE_PREFIX_PATH ${QT_PARENT_DIR}/Qt/${QT_VERSION_STR}/${QT_COMPILER_DIRNAME})
-
-find_package(QT NAMES Qt6 COMPONENTS Widgets Charts Network WebSockets REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Charts Network WebSockets REQUIRED)
-
-include_directories( ${Qt6Charts_PRIVATE_INCLUDE_DIRS} )
+find_package(QT NAMES Qt6 COMPONENTS Quick QuickControls2 Widgets Network WebSockets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Quick QuickControls2 Widgets Network WebSockets REQUIRED)
 
 set(PROJECT_SOURCES
+    frontend/QFCharts/QFCharts.cpp
+    frontend/QFCharts/QFCandle.h
+    frontend/QFCharts/QFAxis.cpp
+    frontend/QFCharts/QFCrosshair.cpp
+    frontend/QFCharts/QFChart.cpp
+    frontend/QFCharts/QFGeoNodes.cpp
+    frontend/QFCharts/QFSeries.cpp
+    #frontend/frontend.qrc
+    frontend/Blackfriars/Blackfriars.cpp
+    frontend/Blackfriars/Alert.cpp
+    frontend/Blackfriars/AppPalette.cpp
+    frontend/Blackfriars/Facade.cpp
+    frontend/Blackfriars/StockItemModel.cpp
+    backend/Controller/Controller.cpp
+    backend/Brokers/brokers.qrc
+    backend/Brokers/AbstractBroker.cpp
+    backend/Brokers/MonteCarloBroker.cpp
+    backend/Brokers/TinkoffBroker.cpp
     main.cpp
-    resources.qrc
-    frontend/palette/palette.cpp
-    frontend/mainwindow/mainwindow.cpp
-    frontend/mainwindow/mainwindow.ui
-    frontend/mainwindow/centralwidget.cpp
-    frontend/mainwindow/centralwidget.ui
-    frontend/rightpane/rightpane.cpp
-    frontend/rightpane/rightpane.ui
-    frontend/preferences/prefdialog.cpp
-    frontend/preferences/prefdialog.ui
-    frontend/tickerinput/tickerinput.cpp
-    frontend/chartpane/chartpane.cpp
-    frontend/chartpane/finchartview.cpp
-    frontend/chartpane/fintimeaxis.cpp
-    frontend/chartpane/chartpane.ui
-    frontend/chartpane/crosshair.cpp
-    frontend/chartpane/shade.cpp
-    frontend/alert/alert.cpp
-    frontend/facade/market.cpp
-    backend/controller/market.cpp
-    backend/controller/preferences.cpp
-    backend/brokers/abstractbroker.cpp
-    backend/brokers/montecarlobroker.cpp
-    backend/brokers/tinkoffbroker.cpp
 )
 
 if (APPLE)
-    set(PROJECT_SOURCES ${PROJECT_SOURCES} frontend/mainwindow/titlebar.mm)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} frontend/Blackfriars/TitleBarMacOS.mm)
+    set(MACOSX_BUNDLE_ICON_FILE blackfriars.icns)
+    set(app_icon_macos
+        "${CMAKE_CURRENT_SOURCE_DIR}/appicon/blackfriars.icns")
+    set_source_files_properties(${app_icon_macos} PROPERTIES
+        MACOSX_PACKAGE_LOCATION "Resources")
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} ${app_icon_macos})
+elseif (WIN32)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES} frontend/Blackfriars/TitleBarWindows.cpp)
+    set(PROJECT_SOURCES ${PROJECT_SOURCES}
+        "${CMAKE_CURRENT_SOURCE_DIR}/appicon/blackfriars.rc")
 endif()
 
-qt_add_executable(Terminal MANUAL_FINALIZATION ${PROJECT_SOURCES})
+if (APPLE)
+    qt_add_executable(Blackfriars MACOSX_BUNDLE ${PROJECT_SOURCES})
+else()
+    qt_add_executable(Blackfriars ${PROJECT_SOURCES})
+endif()
 
-target_link_libraries(Terminal PRIVATE
+if (APPLE)
+    set_target_properties(Blackfriars PROPERTIES
+        MACOSX_BUNDLE_GUI_IDENTIFIER finance.mishurov.co.uk
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    )
+endif()
+
+target_compile_definitions(Blackfriars
+    PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
+
+target_link_libraries(Blackfriars PRIVATE
+    Qt${QT_VERSION_MAJOR}::Quick
+    Qt${QT_VERSION_MAJOR}::QuickControls2
     Qt${QT_VERSION_MAJOR}::Widgets
-    Qt${QT_VERSION_MAJOR}::Charts
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::WebSockets
 )
-
-qt_finalize_executable(Terminal)
