@@ -37,9 +37,9 @@ Which is able to request, using the REST API, available securities, only those t
 
 ### Short-term TODOs
 
-- Refactor and decompose `FinChartView` into a more clean, consice and transparent solution.
+- Refactor all the code: penty of redundancies, everything is too draft-ish and cluttered.
 
-- Develop an interface for easy adding new indicators: support / resistance / lows / highs plotting, averages, momentum indicators, bands, etc.
+- Add tests.
 
 - Refine the control panel UI according to the workflow: ability to reverse positions, use leverage, etc.
 

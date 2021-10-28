@@ -1,0 +1,46 @@
+<!--
+/****************************************************************************
+**
+** This file is part of the Blackfriars Trading Terminal
+**
+** Copyright (C) 2021 Alexander Mishurov
+**
+** GNU General Public License Usage
+** This file may be used under the terms of the GNU
+** General Public License version 3. The licenses are as published by
+** the Free Software Foundation and appearing in the file LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-3.0.html.
+**
+****************************************************************************/
+-->
+
+<RCC>
+<qresource prefix="/">
+   <file>API.qml</file>
+   <file>AppMenu/AppMenu.qml</file>
+   <file>AppMenu/AppMenuMacOS.qml</file>
+   <file>AppMenu/MenuModel.qml</file>
+   <file>ChartStack/ChartStack.qml</file>
+   <file>ChartStack/Crosshair.qml</file>
+   <file>ChartStack/Indicators/common.js</file>
+   <file>ChartStack/Indicators/InfoBackground.qml</file>
+   <file>ChartStack/Indicators/SimpleMovingAverage.qml</file>
+   <file>ChartStack/Indicators/Stochastic.qml</file>
+   <file>ChartStack/MainChart.qml</file>
+   <file>constants.js</file>
+   <file>Controls/ButtonColor.qml</file>
+   <file>Controls/ComboBoxRounded.qml</file>
+   <file>Controls/DoubleSpinBox.qml</file>
+   <file>Controls/SpinBoxExtended.qml</file>
+   <file>main.qml</file>
+   <file>Panes/magnifier.svg</file>
+   <file>Panes/PaneLabel.qml</file>
+   <file>Panes/RightPane.qml</file>
+   <file>Panes/StopRow.qml</file>
+   <file>Panes/TopPane.qml</file>
+   <file>Preferences/Preferences.qml</file>
+   <file>Preferences/PrefLabel.qml</file>
+</qresource>
+</RCC>
